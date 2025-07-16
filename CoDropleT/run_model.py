@@ -238,6 +238,7 @@ def run_inference_colab(input_csv: str):
     args = argparse.Namespace(
         test_csv=Path(input_csv),
         model_ckpt=Path('CoDropleT/params/params.pkl'),
+        results_dir=Path('results'),
         batch_size=1,
     )
     main(args)
