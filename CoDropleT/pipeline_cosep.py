@@ -78,7 +78,6 @@ class DataGenerator():
       data=data[data['id_2'].isin(protein_feats.keys())]
       self.data[data_name]=data
       print(f"After processing protein {data_name}:  Protein: {len(protein_feats)} Time usage:{time()-time_begin}")
-      print(f"Data length: {len(data)}")
       time_begin=time()
 
     self.protein_feats=protein_feats
