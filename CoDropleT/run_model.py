@@ -237,7 +237,7 @@ def run_inference_colab(input_csv: str):
     """Run inference in Google Colab."""
     args = argparse.Namespace(
         test_csv=Path(input_csv),
-        model_ckpt=Path('params/params.pkl'),
+        model_ckpt=Path('CoDropleT/params/params.pkl'),
         batch_size=1,
     )
     main(args)
