@@ -39,9 +39,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-import pipeline_cosep
-from config import model_config
-from model_solubility import myModel
+from CoDropleT import pipeline_cosep
+from CoDropleT.config import model_config
+from CoDropleT.model_solubility import myModel
 
 # --------------------------------------------------------------------------- #
 # Model wrapper
@@ -157,8 +157,7 @@ def parse_args() -> argparse.Namespace:
 # Main
 # --------------------------------------------------------------------------- #
 
-def main():
-    args = parse_args()
+def main(args):
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
     # -------------------------------------------------------------- crop‑size
@@ -234,6 +233,15 @@ def main():
 
     logging.info("Wrote %d predictions to %s", len(out_ids), args.results_dir)
 
+def run_inference_colab(input_csv: str):
+    """Run inference in Google Colab."""
+    args = argparse.Namespace(
+        test_csv=Path(input_csv),
+        model_ckpt=Path('params/params.pkl'),
+        batch_size=1,
+    )
+    main(args)
 
 if __name__ == "__main__":
+    args = parse_args()
     main()
