@@ -49,9 +49,17 @@ class DataGenerator():
           seq=protein_seqs[seq_id]
           protein_dir=protein_dirs[seq_id]
           if resi_num > crop_upper or resi_num<= crop_lower:continue
-          pair=np.load(protein_dir+'/'+seq_id+'_pair_repr_1_model_3.npy')
-          single=np.load(protein_dir+'/'+seq_id+'_single_repr_1_model_3.npy')
-          struc=np.load(protein_dir+'/'+seq_id+'_structure_repr_1_model_3.npy')
+          pair_repr_files = [f for f in os.listdir(protein_dir) if f.startswith(seq_id + '_pair_repr') and f.endswith('.npy')]
+          single_repr_files = [f for f in os.listdir(protein_dir) if f.startswith(seq_id + '_single_repr') and f.endswith('.npy')]
+          structure_repr_files = [f for f in os.listdir(protein_dir) if f.startswith(seq_id + '_structure_repr') and f.endswith('.npy')]
+          if not pair_repr_files or not single_repr_files or not structure_repr_files:
+            print(f"Warning: No representation files found for {seq_id} in {protein_dir}")
+            continue
+          if len(pair_repr_files) > 1 or len(single_repr_files) > 1 or len(structure_repr_files) > 1:
+            print(f"Warning: Multiple representation files found for {seq_id} in {protein_dir}, using the first one.")
+          pair=np.load(protein_dir+'/'+pair_repr_files[0])
+          single=np.load(protein_dir+'/'+single_repr_files[0])
+          struc=np.load(protein_dir+'/'+structure_repr_files[0])
           sequence=residue_constants.sequence_to_onehot(
           sequence=seq,
           mapping=residue_constants.restype_order_with_x,
