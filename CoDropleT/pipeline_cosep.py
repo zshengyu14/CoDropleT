@@ -78,6 +78,7 @@ class DataGenerator():
       data=data[data['id_2'].isin(protein_feats.keys())]
       self.data[data_name]=data
       print(f"After processing protein {data_name}:  Protein: {len(protein_feats)} Time usage:{time()-time_begin}")
+      print(f"Data length: {len(data)}")
       time_begin=time()
 
     self.protein_feats=protein_feats
@@ -104,7 +105,6 @@ class DataGenerator():
       data=data.sample(frac = 1,random_state=int(t))
     data_len=int(len(data)//batch_size)*batch_size
     data=data.iloc[:data_len]
-    print(f"Data length: {len(data)}")
     for i,row in data.iterrows():
       seq_id=row['id_1']
       seq_id_2=row['id_2']
